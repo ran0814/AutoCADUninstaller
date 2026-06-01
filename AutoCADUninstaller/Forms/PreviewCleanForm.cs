@@ -17,14 +17,13 @@ namespace AutoCADUninstaller.Forms
     /// <summary>
     /// 清理预览对话框
     /// </summary>
-    public partial class PreviewCleanForm : Form
+    public class PreviewCleanForm : Form
     {
         private List<ResidueItem> _residuesToDelete;
         public bool UserConfirmed { get; private set; }
 
         public PreviewCleanForm(List<ResidueItem> residues)
         {
-            InitializeComponent();
             _residuesToDelete = residues;
             UserConfirmed = false;
             InitializeUI();
@@ -99,7 +98,7 @@ namespace AutoCADUninstaller.Forms
 
             foreach (var residue in _residuesToDelete)
             {
-                dgv.Rows.Add(residue.Type, residue.Name, residue.Size);
+                dgv.Rows.Add(residue.TypeName, residue.Name, residue.SizeDisplay);
             }
 
             mainPanel.Controls.Add(dgv);
@@ -145,12 +144,12 @@ namespace AutoCADUninstaller.Forms
         {
             var stats = new Dictionary<string, int>
             {
-                { "服务", _residuesToDelete.Count(r => r.Type == "Service") },
-                { "进程", _residuesToDelete.Count(r => r.Type == "Process") },
-                { "文件", _residuesToDelete.Count(r => r.Type == "File") },
-                { "注册表", _residuesToDelete.Count(r => r.Type == "Registry") },
-                { "快捷方式", _residuesToDelete.Count(r => r.Type == "Shortcut") },
-                { "卸载信息", _residuesToDelete.Count(r => r.Type == "Uninstall") }
+                { "服务", _residuesToDelete.Count(r => r.Type == ResidueType.Service) },
+                { "进程", _residuesToDelete.Count(r => r.Type == ResidueType.Process) },
+                { "文件", _residuesToDelete.Count(r => r.Type == ResidueType.File) },
+                { "注册表", _residuesToDelete.Count(r => r.Type == ResidueType.Registry) },
+                { "快捷方式", _residuesToDelete.Count(r => r.Type == ResidueType.Shortcut) },
+                { "卸载信息", _residuesToDelete.Count(r => r.Type == ResidueType.UninstallEntry) }
             };
 
             int x = 10;
@@ -168,12 +167,7 @@ namespace AutoCADUninstaller.Forms
                 x += 150;
             }
 
-            var totalSize = _residuesToDelete.Sum(r =>
-            {
-                if (long.TryParse(r.Size, out long size))
-                    return size;
-                return 0;
-            });
+            var totalSize = _residuesToDelete.Sum(r => r.Size);
 
             var lblTotal = new Label
             {

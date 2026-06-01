@@ -18,14 +18,13 @@ namespace AutoCADUninstaller.Forms
     /// <summary>
     /// 扫描结果详细展示对话框
     /// </summary>
-    public partial class ScanResultForm : Form
+    public class ScanResultForm : Form
     {
         private ScanResult _scanResult;
         private List<ResidueItem> _allResidues;
 
         public ScanResultForm(ScanResult scanResult)
         {
-            InitializeComponent();
             _scanResult = scanResult;
             _allResidues = scanResult.AllResidues;
             InitializeUI();
@@ -97,7 +96,7 @@ namespace AutoCADUninstaller.Forms
         private void CreateServiceTab(TabControl tabControl)
         {
             var tab = new TabPage { Text = $"🔧 服务残留 ({_scanResult.ServiceCount})" };
-            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == "Service").ToList());
+            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == ResidueType.Service).ToList());
             tab.Controls.Add(dgv);
             tabControl.TabPages.Add(tab);
         }
@@ -105,7 +104,7 @@ namespace AutoCADUninstaller.Forms
         private void CreateProcessTab(TabControl tabControl)
         {
             var tab = new TabPage { Text = $"⚙️ 进程残��� ({_scanResult.ProcessCount})" };
-            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == "Process").ToList());
+            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == ResidueType.Process).ToList());
             tab.Controls.Add(dgv);
             tabControl.TabPages.Add(tab);
         }
@@ -113,7 +112,7 @@ namespace AutoCADUninstaller.Forms
         private void CreateFileTab(TabControl tabControl)
         {
             var tab = new TabPage { Text = $"📁 文件残留 ({_scanResult.FileCount})" };
-            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == "File").ToList());
+            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == ResidueType.File).ToList());
             tab.Controls.Add(dgv);
             tabControl.TabPages.Add(tab);
         }
@@ -121,7 +120,7 @@ namespace AutoCADUninstaller.Forms
         private void CreateRegistryTab(TabControl tabControl)
         {
             var tab = new TabPage { Text = $"📚 注册表残留 ({_scanResult.RegistryCount})" };
-            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == "Registry").ToList());
+            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == ResidueType.Registry).ToList());
             tab.Controls.Add(dgv);
             tabControl.TabPages.Add(tab);
         }
@@ -129,7 +128,7 @@ namespace AutoCADUninstaller.Forms
         private void CreateShortcutTab(TabControl tabControl)
         {
             var tab = new TabPage { Text = $"🔗 快捷方式残留 ({_scanResult.ShortcutCount})" };
-            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == "Shortcut").ToList());
+            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == ResidueType.Shortcut).ToList());
             tab.Controls.Add(dgv);
             tabControl.TabPages.Add(tab);
         }
@@ -137,7 +136,7 @@ namespace AutoCADUninstaller.Forms
         private void CreateUninstallTab(TabControl tabControl)
         {
             var tab = new TabPage { Text = $"📦 卸载信息残留 ({_scanResult.UninstallCount})" };
-            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == "Uninstall").ToList());
+            var dgv = CreateDataGridView(_scanResult.AllResidues.Where(r => r.Type == ResidueType.UninstallEntry).ToList());
             tab.Controls.Add(dgv);
             tabControl.TabPages.Add(tab);
         }
@@ -211,7 +210,7 @@ namespace AutoCADUninstaller.Forms
 
             foreach (var residue in residues)
             {
-                dgv.Rows.Add(residue.Name, residue.Description, residue.Size);
+                dgv.Rows.Add(residue.Name, residue.Note ?? "", residue.SizeDisplay);
             }
 
             dgv.DefaultCellStyle.BackColor = colors.BackgroundPrimary;
