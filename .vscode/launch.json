@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET 8 发布模式运行",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/AutoCADUninstaller/bin/Debug/net8.0-windows/AutoCADUninstaller.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "console": "disabled",
+            "stopAtEntry": false,
+            "requireExactSource": false
+        }
+    ]
+}

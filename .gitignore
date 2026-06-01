@@ -1,0 +1,37 @@
+## .NET / Visual Studio
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+*.nupkg
+*.snupkg
+.vs/
+*.userprefs
+
+## Build output
+publish_output/
+publish_singlefile/
+publish/
+Release/
+Debug/
+
+## NuGet
+packages/
+*.nuget.props
+*.nuget.targets
+
+## Rider / VS Code
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+## OS
+Thumbs.db
+.DS_Store
+Desktop.ini

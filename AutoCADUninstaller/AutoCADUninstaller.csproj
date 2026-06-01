@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>AutoCADUninstaller</RootNamespace>
+    <AssemblyName>AutoCADUninstaller</AssemblyName>
+    <PlatformTarget>x64</PlatformTarget>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+
+    <!-- 程序集信息 -->
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Product>AutoCAD Uninstaller</Product>
+    <Description>AutoCAD 残留物扫描与清理工具，基于 Autobox 逆向分析</Description>
+    <Copyright>Copyright 2026</Copyright>
+  </PropertyGroup>
+
+  <!-- 额外需要的 NuGet 包 -->
+  <ItemGroup>
+    <!-- Windows 服务控制（ServiceController 类） -->
+    <PackageReference Include="System.ServiceProcess.ServiceController" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>
